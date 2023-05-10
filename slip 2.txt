@@ -1,0 +1,100 @@
+/// Q 1 ///
+
+--1--
+
+import numpy as np
+import matplotlib.pyplot as plt
+x = np.linspace(0,10)
+y = np.log10(x)
+plt.plot(x, y)
+plt.xlabel('x')
+plt.ylabel('f(x) = log10(x)')
+plt.title('2D Graph of f(x) = log10(x)')
+plt.grid(True)
+plt.show()
+
+
+--3--
+
+import matplotlib.pyplot as plt
+left = [1,2,3,4,5]
+height = [68,90,70,85,91]
+tick_label=['Maths','Science','English','Marathi',’Hindi']
+plt.bar (left,height,tick_label = tick_label,width = 0.8 ,color = ['green','green'])
+plt.xlabel('Item')
+plt.ylabel('Expenditure')
+plt. show()
+
+
+/// Q 2 ///
+
+--1--
+
+from sympy import Point, Line
+A = Point(0, 2)
+B = Point(5, 2)
+C = Point(3, 0)
+collinear = Point.is_collinear(A, B, C)
+if collinear:
+print("Points A, B, and C are collinear.")
+else:
+print("Points A, B, and C are not collinear.")
+AB_line = Line(A, B)
+distance = AB_line.distance(C)
+print("Distance of the line passing through A and B from point C: ", distance)
+
+
+--3--
+
+import numpy as np
+A = np.array([0, 0])
+B = np.array([6, 0])
+C = np.array([4, 4])
+AB = np.linalg.norm(B - A)
+BC = np.linalg.norm(C - B)
+CA = np.linalg.norm(A - C)
+s = (AB + BC + CA) / 2
+area = np.sqrt(s * (s - AB) * (s - BC) * (s - CA))
+perimeter = AB + BC + CA
+print("Triangle ABC:")
+print("Side AB:", AB)
+print("Side BC:", BC)
+print("Side CA:", CA)
+print("Area:", area)
+print("Perimeter:", perimeter)
+
+
+/// Q 3 ///
+
+--A1--
+
+from pulp import *
+problem = LpProblem("LPP", LpMaximize)
+x = LpVariable('x', lowBound=0, cat='Continuous')
+y = LpVariable('y', lowBound=0, cat='Continuous')
+problem += 5 * x + 3 * y, "Z"
+problem += x + y <= 7, "Constraint1"
+problem += 2*x +5* y <= 15, "Constraint2"
+problem.solve()
+print("Status:", LpStatus[problem.status])
+print("Optimal x =", value(x))
+print("Optimal y =", value(y))
+print("Optimal Z =", value(problem.objective))
+
+
+--B1--
+
+import numpy as np
+P = np.array([4, -2])
+P_reflection_y_axis = np.array([-P[0], P[1]])
+P_scaling_x = np.array([3 * P[0], P[1]])
+P_scaling_y = np.array([P[0], 2.5 * P[1]])
+P_reflection_line = np.array([-P[1], -P[0]])
+print("Original Point P: ", P)
+print("Reflection through y-axis: ", P_reflection_y_axis)
+print("Scaling in X-coordinate by factor 3: ", P_scaling_x)
+print("Scaling in Y-coordinate by factor 2.5: ", P_scaling_y)
+print("Reflection through the line y = -x: ", P_reflection_line)
+
+
+

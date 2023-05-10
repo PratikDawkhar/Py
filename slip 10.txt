@@ -1,0 +1,114 @@
+/// Q 1 ///
+
+
+--2--
+
+import matplotlib.pyplot as plt
+left = [1,2,3,4,5]
+height = [600,4000,200,1500,]
+tick_label=[‘clothing’,’food’,’rent’,’petrol’,’Misc’]
+plt.bar (left,height,tick_label = tick_label,width = 0.8 ,color = ['green','green'])
+plt.xlabel('Item')
+plt.ylabel('Expenditure')
+plt. show()
+
+
+--3--
+
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+x = np.linspace(10, 20, 500)
+y = np.sin(2 * x)
+z = x
+x = np.cos(2 * x)
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+ax.plot(x, y, z, color='red')
+ax.set_title("3D Line Graph: (cos(2x), sin(2x), x)")
+ax.set_xlabel('X')
+ax.set_ylabel('Y')
+ax.set_zlabel('Z')
+plt.show()
+
+
+/// Q 2 ///
+
+
+--1--
+
+import numpy as np
+A = np.array([1, 1])
+B = np.array([2, -2])
+C = np.array([1, 2])
+angle = np.radians(90)
+rotation_matrix = np.array([[np.cos(angle), -np.sin(angle)],
+		[np.sin(angle), np.cos(angle)]])
+A_rotated = np.dot(rotation_matrix, A)
+B_rotated = np.dot(rotation_matrix, B)
+C_rotated = np.dot(rotation_matrix, C)
+print("Rotated Point A: ", A_rotated)
+print("Rotated Point B: ", B_rotated)
+print("Rotated Point C: ", C_rotated)
+
+
+--2--
+
+import matplotlib.pyplot as plt
+import numpy as np
+vertices = np.array([[0, 0], [2, 0], [2, 3], [1, 6]])
+plt.figure()
+plt.plot(vertices[:, 0], vertices[:, 1], 'bo-')
+plt.title('Original Polygon')
+plt.xlabel('X')
+plt.ylabel('Y')theta = np.pi # 180 degrees
+rotation_matrix = np.array([[np.cos(theta), -np.sin(theta)],
+	[np.sin(theta), np.cos(theta)]])
+vertices_rotated = np.dot(vertices, rotation_matrix)
+plt.figure()
+plt.plot(vertices_rotated[:, 0], vertices_rotated[:, 1], 'ro-')
+plt.title('Rotated Polygon (180 degrees)')
+plt.xlabel('X')
+plt.ylabel('Y')
+plt.show()
+
+
+/// Q 3 ///
+
+--A1--
+
+from pulp import *
+prob = LpProblem("Maximization Problem", LpMaximize)
+x = LpVariable('x', lowBound=0, cat='Continuous')
+y = LpVariable('y', lowBound=0, cat='Continuous')
+prob += x + y, "Z"
+prob += x - y >= 1
+prob += x + y >= 2
+prob.solve()
+print("Status: ", LpStatus[prob.status])
+if prob.status == LpStatusOptimal:
+print("Optimal Solution:")
+print("x = ", value(x))
+print("y = ", value(y))
+print("Z = ", value(prob.objective))
+
+
+--B1--
+
+import numpy as np
+P = np.array([-2,4])
+P_reflect_x = np.array([P[0],-P[1]])
+P_scale_x = np.array([6 * P[0], P[1]])
+angle = np.pi / 6
+P_rotate = np.array([P[0] * np.cos(angle) - P[1] * np.sin(angle), P[0] * np.sin(angle) + P[1] * np.cos(angle)])
+shearing_factor = 4
+P_shear_x = np.array([P[0] + shearing_factor * P[1], P[1]])
+print("Initial point P:", P)
+print("Reflection through x-axis:", P_reflect_x)
+print("Scaling in X-coordinate by factor 6:", P_scale_x)
+print("Shearing in X-direction by 4 units:", P_shear_x)
+print("Rotation about origin through an angle 30 :", P_rotate)
+
+
+
+

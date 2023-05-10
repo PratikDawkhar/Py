@@ -1,0 +1,113 @@
+/// Q 1 ///
+
+--1--
+
+import matplotlib.pyplot as plt
+triangle_vertices = [[5, 4], [7, 4], [6, 6]]
+x = [vertex[0] for vertex in triangle_vertices]
+y = [vertex[1] for vertex in triangle_vertices]
+plt.axhline(0, color='black')
+plt.axvline(0, color='black')
+plt.plot(x + [x[0]], y + [y[0]], 'g')
+plt.xlim(4, 8)
+plt.ylim(3, 7)
+plt.xlabel('X-axis')
+plt.ylabel('Y-axis')
+plt.show()
+
+
+--3--
+
+import numpy as np
+import matplotlib.pyplot as plt
+x = np.arange(0, 2*np.pi, 0.01)
+y = np.cos(x)
+plt.plot(x, y, label='f(x) = cos(x)')
+plt.xlabel('x')
+plt.ylabel('f(x)')
+plt.title('Graph of f(x) = cos(x)')
+plt.legend()
+plt.grid(True)
+plt.show()
+
+
+/// Q 2 ///
+
+--2--
+
+from sympy import Point, Line
+A = Point(0, 7)
+B = Point(5, 2)
+line_AB = Line(A, B)
+length_AB = A.distance(B)
+midpoint_AB = ((A[0] + B[0]) / 2, (A[1] + B[1]) / 2)
+print("Point A: {}".format(A))
+print("Point B: {}".format(B))
+print("Line segment AB: {}".format(line_AB))
+print("Length of line segment AB: {}".format(length_AB))
+print("Midpoint of line segment AB: {}".format(midpoint_AB))
+
+
+--3--
+
+import numpy as np
+A = np.array([0, 0])
+B = np.array([5, 0])
+C = np.array([3, 3])
+AB = np.linalg.norm(B - A)
+BC = np.linalg.norm(C - B)
+CA = np.linalg.norm(A - C)
+s = (AB + BC + CA) / 2
+area = np.sqrt(s * (s - AB) * (s - BC) * (s - CA))
+perimeter = AB + BC + CA
+print("Triangle ABC:")
+print("Side AB:", AB)
+print("Side BC:", BC)
+print("Side CA:", CA)
+print("Area:", area)
+print("Perimeter:", perimeter)
+
+
+/// Q 3 ///
+
+--A1--
+
+from pulp import *
+problem = LpProblem("LPP", LpMaximize)
+x = LpVariable('x', lowBound=0, cat='Continuous')
+y = LpVariable('y', lowBound=0, cat='Continuous')
+problem += 150 * x + 75 * y, "Z"
+problem += 4 * x + 6 * y <= 24, "Constraint1"
+problem += 5 * x + 3 * y <= 15, "Constraint2"
+problem.solve()
+print("Status:", LpStatus[problem.status])
+print("Optimal x =", value(x))
+print("Optimal y =", value(y))
+print("Optimal Z =", value(problem.objective))
+
+
+--B1--
+
+import numpy as np
+P = np.array([-2, 4])
+shearing_Y = np.array([[1, 0], [7, 1]])
+P_transformed1 = np.dot(shearing_Y, P)
+scaling_XY = np.array([[7/2, 0], [0, 7]])
+P_transformed2 = np.dot(scaling_XY, P)
+shearing_XY = np.array([[1, 4], [7, 1]])
+P_transformed3 = np.dot(shearing_XY, P)
+angle = np.radians(60)
+rotation = np.array([[np.cos(angle), -np.sin(angle)], [np.sin(angle),np.cos(angle)]])
+P_transformed4 = np.dot(rotation, P)
+print("Original Point P: {}".format(P))
+print("Transformation 1: Shearing in Y direction by 7 units:{}".format(P_transformed1))
+print("Transformation 2: Scaling in X and Y direction by 7/2 and 7 units respectively: {}".format(P_transformed2))
+print("Transformation 3: Shearing in X and Y direction by 4 and 7 units respectively: {}".format(P_transformed3))
+print("Transformation 4: Rotation about origin by an angle of 60 degrees:{}".format(P_transformed4))
+
+
+
+
+
+
+

@@ -1,0 +1,118 @@
+///Q1///
+---1---
+
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+x = np.linspace(-10, 10, 100)
+y = np.linspace(-10, 10, 100)
+X, Y = np.meshgrid(x, y)
+Z = np.sin(X) + np.cos(Y)
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+ax.plot_surface(X, Y, Z, cmap='viridis')
+ax.set_xlabel('X')
+ax.set_ylabel('Y')
+ax.set_zlabel('Z')
+ax.set_title('3D Plot of z = sin(x) + cos(y)')
+plt.show()
+
+---3---
+
+import numpy as np 
+import matplotlib.pyplot as plt 
+from mpl_toolkits.mplot3d import Axes3D 
+def func(x, y): 
+ 	return np.cos(x**2 + y**2 - 0.5) 
+
+x = np.linspace(-1, 1, 100) 
+y = np.linspace(-1, 1, 100) 
+X, Y = np.meshgrid(x, y) # Create a grid of x, y values 
+Z = func(X, Y)
+fig = plt.figure() 
+ax = fig.add_subplot(111, projection='3d') 
+ax.plot_surface(X, Y, Z, cmap='viridis') # Plot the surface 
+ax.set_xlabel('X') 
+ax.set_ylabel('Y') 
+ax.set_zlabel('Z') 
+ax.set_title('Surface Plot of z = cos(x**2 + y**2 - 0.5)') 
+plt.show()
+
+///Q2///
+---1---
+
+import numpy as np
+point1 = np.array([1, 0])
+point2 = np.array([2, -1])
+R = np.array([[-1, 0],[0, -1]])
+rotated_point1 = np.dot(R, point1)
+rotated_point2 = np.dot(R, point2)
+print("Rotated endpoint 1: ", rotated_point1)
+print("Rotated endpoint 2: ", rotated_point2)
+
+
+---2---
+
+from sympy import Point, Line
+P = Point(5, 2)
+Q = Point(5, -2)
+R = Point(5, 0)
+collinear = Point.is_collinear(P, Q, R)
+if collinear:
+ 	print("Points P, Q, and R are collinear.")
+else:
+ 	print("Points P, Q, and R are not collinear.")
+
+ray_PQ = Line(P, Q)
+length_PQ = P.distance(Q)
+print("Length of ray PQ:", length_PQ)
+if ray_PQ.slope == None:
+ 	print("Slope of ray PQ: Undefined (division by zero)")
+else:
+ 	print("Slope of ray PQ:", ray_PQ.slope)
+
+
+///Q3///
+---A1---
+
+from pulp import *
+prob = LpProblem("LPP", LpMinimize)
+x = LpVariable("x", lowBound=0)
+y = LpVariable("y", lowBound=0)
+prob += 150*x + 75*y, "Z"
+prob += 4*x + 6*y <= 24
+prob += 5*x + 3*y <= 15
+prob.solve(PULP_CBC_CMD(msg=False, mip=0))
+print("Status:", LpStatus[prob.status])
+print("Optimal values:")
+print("x =", value(x))
+print("y =", value(y))
+print("Optimal Z =", value(prob.objective))
+
+
+---B1--
+
+import numpy as np
+point = np.array([-2, 4])
+reflection_x = np.array([[1, 0],[0, -1]])
+reflected_point = np.dot(reflection_x, point)
+print("Reflection through X-axis:")
+print("Initial point:", point)
+print("Reflected point:", reflected_point)
+scaling_x = np.array([[6, 0],[0, 1]])
+scaled_point = np.dot(scaling_x, point)
+print("\nScaling in X-coordinate by factor 6:")
+print("Initial point:", point)
+print("Scaled point:", scaled_point)
+shearing_x = np.array([[1, 4],[0, 1]])
+sheared_point = np.dot(shearing_x, point)
+print("\nShearing in X direction by 4 units:")
+print("Initial point:", point)
+print("Sheared point:", sheared_point)
+angle = np.deg2rad(30)
+rotation = np.array([[np.cos(angle), -np.sin(angle)],[np.sin(angle), np.cos(angle)]])
+rotated_point = np.dot(rotation, point)
+print("\nRotate about origin through an angle of 30 degrees:")
+print("Initial point:", point)
+print("Rotated point:", rotated_point)
+

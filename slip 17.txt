@@ -1,0 +1,129 @@
+///Q1///
+
+---1---
+
+import matplotlib.pyplot as plt 
+import numpy as np 
+x = np.linspace(-6, 6, 100) 
+y = np.linspace(-6, 6, 100) 
+X, Y = np.meshgrid(x, y) 
+Z = X**2 + Y**2 
+fig = plt.figure() 
+ax = fig.add_subplot(111, projection='3d') 
+ax.plot_surface(X, Y, Z, cmap='viridis') 
+ax.set_xlabel('X-axis') 
+ax.set_ylabel('Y-axis') 
+ax.set_zlabel('Z-axis') 
+ax.set_title('3D Surface Plot of z = x^2 + y^2') 
+plt.show() 
+
+---2---
+
+import matplotlib.pyplot as plt
+import numpy as np
+x = np.linspace(-5, 5, 100)
+y = np.linspace(-5, 5, 100)
+X, Y = np.meshgrid(x, y)
+Z = np.log(X**2 * Y**2)
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+ax.contour(X, Y, Z, cmap='Greens')
+ax.set_xlabel('X-axis')
+ax.set_ylabel('Y-axis')
+ax.set_zlabel('f(x, y)')
+ax.set_title('3D Contour Plot of f(x, y) = log(x^2 * y^2)')
+plt.show()
+
+///Q2///
+
+---1---
+
+
+import matplotlib.pyplot as plt
+import numpy as np
+A = np.array([1, 0])
+B = np.array([2, -1])
+midpoint = (A + B) / 2
+rotation_matrix = np.array([[-1, 0],[0, -1]]) 
+A_rotated = np.dot(rotation_matrix, A - midpoint) + midpoint
+B_rotated = np.dot(rotation_matrix, B - midpoint) + midpoint
+fig, ax = plt.subplots()
+ax.plot([A[0], B[0]], [A[1], B[1]], 'b', label='Original Line Segment AB')
+ax.plot([A_rotated[0], B_rotated[0]], [A_rotated[1], B_rotated[1]], 'r', label='Rotated Line Segment A\'B\'')
+ax.scatter(midpoint[0], midpoint[1], color='g', marker='o', label='Midpoint')
+ax.legend()
+ax.set_xlabel('X-axis')
+ax.set_ylabel('Y-axis')
+ax.set_title('Rotation of Line Segment AB by 180 Degrees around Midpoint')
+plt.axis('equal')
+plt.grid(True)
+plt.show()
+
+---2---
+
+import matplotlib.pyplot as plt
+import numpy as np
+# Define the vertices of the triangle
+A = np.array([3, 3])
+B = np.array([5, 6])
+C = np.array([5, 2])
+theta = -np.pi
+rotation_matrix = np.array([[np.cos(theta), -np.sin(theta)],[np.sin(theta), np.cos(theta)]]) 
+A_rotated = np.dot(rotation_matrix, A)
+B_rotated = np.dot(rotation_matrix, B)
+C_rotated = np.dot(rotation_matrix, C)
+fig, ax = plt.subplots()
+ax.plot([A[0], B[0], C[0], A[0]], [A[1], B[1], C[1], A[1]], 'b', label='Original Triangle ABC')
+ax.plot([A_rotated[0], B_rotated[0], C_rotated[0], A_rotated[0]], [A_rotated[1], 
+B_rotated[1], C_rotated[1], A_rotated[1]], 'r', label='Rotated Triangle A\'B\'C\'')
+ax.scatter(A[0], A[1], color='g', marker='o', label='A') 
+ax.scatter(B[0], B[1], color='g', marker='o', label='B') 
+ax.scatter(C[0], C[1], color='g', marker='o', label='C')
+ax.scatter(0, 0, color='g', marker='o', label='Origin')
+ax.legend()
+ax.set_xlabel('X-axis')
+ax.set_ylabel('Y-axis')
+ax.set_title('Rotation of Triangle ABC by -pi Radians around Origin')
+plt.axis('equal')
+plt.grid(True)
+plt.show()
+
+///Q3///
+---A1---
+
+from pulp import *
+lp_problem = LpProblem("Linear_Programming_Problem", LpMaximize)
+x = LpVariable('x', lowBound=0, cat='Continuous')
+y = LpVariable('y', lowBound=0, cat='Continuous')
+z = LpVariable('z', lowBound=0, cat='Continuous')
+w = LpVariable('w', lowBound=0, cat='Continuous')
+lp_problem += 4*x + y + 3*z + 5*w
+lp_problem += 4*x + 6*y - 5*z - 4*w >= -20
+lp_problem += -8*x - 3*y + 3*z + 2*w <= 5
+lp_problem += x >= 0
+lp_problem += y >= 0
+lp_problem.solve()
+print("Status: ", LpStatus[lp_problem.status])
+print("Optimal Values:")
+print("x = ", x.varValue)
+print("y = ", y.varValue)
+print("z = ", z.varValue)
+print("w = ", w.varValue)
+print("Optimal Objective Function Value = ", lpSum([4*x, y, 3*z, 5*w]).getValue())
+
+---B2---
+
+import matplotlib.pyplot as plt
+import numpy as np
+vertices = np.array([[3, 3],[4, 6],[5, 4],[4, 2],[2, 2]]) 
+plt.plot(vertices[:, 0], vertices[:, 1], '-o', label='Original Polygon')
+translation_matrix = np.array([[-2, 1]])
+vertices_translated = vertices + translation_matrix
+plt.plot(vertices_translated[:, 0], vertices_translated[:, 1], '-o', label='Translated Polygon')
+plt.title('Polygon Translation')
+plt.xlabel('X')
+plt.ylabel('Y')
+plt.legend()
+plt.xlim(-4, 6)
+plt.ylim(-2, 8)
+plt.show()

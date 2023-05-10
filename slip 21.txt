@@ -1,0 +1,123 @@
+///Q1///
+
+---1---
+
+import numpy as np 
+import matplotlib.pyplot as plt 
+def f(x): 
+ return x**4 
+
+x = np.linspace(0, 5, 100) 
+y = f(x) 
+plt.plot(x, y, 'r--o', markersize=6) 
+plt.xlabel('x') 
+plt.ylabel('f(x)') 
+plt.title('Graph of f(x) = x**4') 
+plt.show() 
+
+
+---3---
+
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+def f(x, y):
+ 	return np.exp(x**2 + y**2)
+
+x = np.linspace(0, 2*np.pi, 100)
+y = np.linspace(0, 2*np.pi, 100)
+X, Y = np.meshgrid(x, y)
+Z = f(X, Y)
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+ax.plot_wireframe(X, Y, Z, rstride=5, cstride=5)
+ax.set_xlabel('X')
+ax.set_ylabel('Y')
+ax.set_zlabel('Z')
+ax.set_title('3D Wireframe Plot of f(x) = exp(x^2 + y^2)')
+plt.show()
+
+
+///Q2///
+---1---
+
+import numpy as np
+A = np.array([2, 5])
+B = np.array([4, -13])
+T = np.array([[2, 3], [4, 1]]) 
+A_transformed = np.dot(T, A)
+B_transformed = np.dot(T, B)
+slope_transformed = (B_transformed[1] - A_transformed[1]) / (B_transformed[0] - A_transformed[0])
+midpoint_transformed = (A_transformed + B_transformed) / 2
+print("Slope of the transformed line: ", slope_transformed)
+print("Midpoint of the transformed line: ", midpoint_transformed)
+
+
+---2---
+
+import numpy as np
+import matplotlib.pyplot as plt
+vertices = np.array([[4, 4], [2, 4], [2, 2], [4, 2], [4, 4]])
+fig, ax = plt.subplots()
+ax.plot(vertices[:, 0], vertices[:, 1], 'b-o', label='Original Square')
+expansion_factor = 3
+reduction_factor = 0.4
+expanded_vertices = vertices * expansion_factor
+reduced_vertices = vertices * reduction_factor
+ax.plot(expanded_vertices[:, 0], expanded_vertices[:, 1], 'r-o', label='Uniform Expansion')
+ax.plot(reduced_vertices[:, 0], reduced_vertices[:, 1], 'g-o', label='Uniform Reduction')
+ax.set_xlabel('X')
+ax.set_ylabel('Y')
+ax.set_title('Uniform Expansion and Reduction of a Square')
+ax.legend()
+ax.set_aspect('equal')
+plt.show()
+
+
+///Q3///
+---A1---
+
+from pulp import *
+prob = LpProblem("Maximize Z", LpMaximize)
+x = LpVariable("x", lowBound=0, cat='Continuous') 
+y = LpVariable("y", lowBound=0, cat='Continuous') 
+prob += 4 * x + 2 * y, "Z"
+prob += x + y <= 3, "Constraint 1"
+prob += x - y >= 2, "Constraint 2"
+prob += y <= 2, "Constraint 3"
+prob.solve()
+print("Solution Status: {}".format(LpStatus[prob.status]))
+print("Optimal Solution:")
+print("x = {}".format(value(x)))
+print("y = {}".format(value(y)))
+print("Z = {}".format(value(prob.objective)))
+
+
+---B1---
+
+P = [-2, 4]
+print("Original Point P: {}".format(P))
+A = 3
+B = 4
+C = -5
+Px_reflect = P[0] - 2 * (A * P[0] + B * P[1] + C) / (A**2 + B**2)
+Py_reflect = P[1] - 2 * (A * P[1] - B * P[0] + C) / (A**2 + B**2)
+P_reflect = [Px_reflect, Py_reflect]
+print("Reflection through line 3x + 4y = 5: {}".format(P_reflect))
+scale_factor_x = 6
+Px_scaled_x = P[0] * scale_factor_x
+Py_scaled_x = P[1]
+P_scaled_x = [Px_scaled_x, Py_scaled_x]
+print("Scaling in X coordinate by factor 6: {}".format(P_scaled_x))
+scale_factor_y = 4.1
+Px_scaled_y = P[0]
+Py_scaled_y = P[1] * scale_factor_y
+P_scaled_y = [Px_scaled_y, Py_scaled_y]
+print("Scaling in Y coordinate by factor 4.1: {}".format(P_scaled_y))
+A = 2
+B = -1
+C = -3
+Px_reflect_y = P[0]
+Py_reflect_y = P[1] - 2 * (A * P[0] + B * P[1] + C) / (A**2 + B**2)
+P_reflect_y = [Px_reflect_y, Py_reflect_y]
+print("Reflection through line y = 2x + 3: {}".format(P_reflect_y))

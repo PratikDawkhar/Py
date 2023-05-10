@@ -1,0 +1,92 @@
+/// Q 1 ///
+
+--1--
+
+import numpy as np
+import matplotlib.pyplot as plt
+x = np.linspace(0,2*np.pi)
+y = np.cos(x)
+plt.plot(x, y)
+plt.xlabel('x')
+plt.ylabel('f(x) = log10(x)')
+plt.title('2D Graph of f(x) = log10(x)')
+plt.grid(True)
+plt.show()
+
+
+--3--
+
+import matplotlib.pyplot as plt
+left = [1,2,3,4,5]
+height = [65,30,54,10,20]
+tick_label=['Cricket','Football','Hockey','Chess','Tennis']
+plt.bar (left,height,tick_label = tick_label,width = 0.7 ,color = ['orange','green'])
+plt.xlabel('Games')
+plt.ylabel('No.Of Student')
+plt. show()
+
+
+
+/// Q 2 ///
+
+--1--
+
+import numpy as np
+A = np.array([5, 3])
+B = np.array([1, 4])
+def reflect(line, point):
+	m = line[0]
+	c = line[1]
+	x, y = point
+	x_reflect = (2 * m * (y - c) + x * (m ** 2 - 1)) / (m ** 2 + 1)
+	y_reflect = (2 * m * x + y * (1 - m ** 2) + 2 * c) / (m ** 2 + 1)
+	return np.array([x_reflect, y_reflect])
+line = np.array([1, -1])
+A_reflected = reflect(line, A)
+B_reflected = reflect(line, B)
+print("Reflected Point A':", A_reflected)
+print("Reflected Point B':", B_reflected)
+
+
+--3--
+
+x1, y1 = 0, 0
+x2, y2 = 10, 10
+midpoint_x = (x1 + x2) / 2
+midpoint_y = (y1 + y2) / 2
+print("Midpoint: ({}, {})".format(midpoint_x, midpoint_y))
+
+
+/// Q 3 ///
+
+--A1--
+
+from pulp import *
+problem = LpProblem("Maximize Z", LpMaximize)
+x = LpVariable("x", lowBound=0, cat='Continuous')
+y = LpVariable("y", lowBound=0, cat='Continuous')
+Z = 3.5 * x + 2 * y
+problem += Z
+problem += x + y >= 5
+problem += x >= 15
+problem += y <= 2
+problem.solve()
+print("Optimal solution:")
+print("x =", value(x))
+print("y =", value(y))
+print("Optimal value of Z =", value(problem.objective))
+
+
+--B1--
+
+import numpy as np
+P = np.array([4, -2])
+reflection_y_axis = np.array([-1, 1]) * P
+scaling_x = np.array([3, 1]) * P
+scaling_y = np.array([1, 2.5]) * P
+reflection_line = np.array([1, -1]) * P
+print("Original point P:", P)
+print("Reflection through y-axis:", reflection_y_axis)
+print("Scaling in X-coordinates by factor 3:", scaling_x)
+print("Scaling in Y-coordinates by factor 2.5:", scaling_y)
+print("Reflection through the line y = -x:", reflection_line)
